@@ -22,7 +22,7 @@ body {
   padding: 10px;
 }
 .search-form__input {
-  height: 40px;
+  height: 35px;
   font-size: 20px;
   padding: 5px;
   border-radius: 5px ;
@@ -38,7 +38,9 @@ body {
   background-image: url('../images/search.svg');
   background-size: 20px;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
+
 .gallery {
   padding-top: 80px;
   display: flex;

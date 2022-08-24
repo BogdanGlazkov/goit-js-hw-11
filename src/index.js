@@ -15,6 +15,12 @@ const refs = {
 
 const imgApiService = new ImgApiService();
 
+const simpleLightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionsDelay: 250,
+  scrollZoomFactor: false,
+});
+
 refs.searchForm.addEventListener('submit', onSearch);
 refs.input.addEventListener('input', () => (refs.button.disabled = false));
 
@@ -22,10 +28,8 @@ window.addEventListener('scroll', () => {
   if (
     window.scrollY + window.innerHeight >=
     document.documentElement.scrollHeight
-  ) {
-    console.log('111');
+  )
     fetchImages();
-  }
 });
 
 function onSearch(event) {
@@ -33,6 +37,11 @@ function onSearch(event) {
   refs.button.disabled = true;
 
   imgApiService.searchQuery = event.currentTarget.elements.searchQuery.value;
+
+  if (imgApiService.searchQuery === '') {
+    Notify.failure('Enter text');
+    return;
+  }
 
   imgApiService.resetPage();
   clearImagesContainer();
@@ -44,6 +53,18 @@ function fetchImages() {
     imgApiService.totalPage = Math.ceil(data.total / imgApiService.per_page);
     imgApiService.loadedNow += data.hits.length;
 
+    if (imgApiService.page === 2 && data.hits.length > 0) {
+      Notify.success(`Hooray! We found ${data.total} images.`);
+    }
+
+    if (data.hits.length === 0) {
+      Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+      return;
+    }
+
+    Notify.success(`Loaded ${imgApiService.loadedNow} images.`);
     appendImagesMarkup(data.hits);
     simpleLightbox.refresh();
   });
