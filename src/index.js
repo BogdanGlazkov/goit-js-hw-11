@@ -18,6 +18,16 @@ const imgApiService = new ImgApiService();
 refs.searchForm.addEventListener('submit', onSearch);
 refs.input.addEventListener('input', () => (refs.button.disabled = false));
 
+window.addEventListener('scroll', () => {
+  if (
+    window.scrollY + window.innerHeight >=
+    document.documentElement.scrollHeight
+  ) {
+    console.log('111');
+    fetchImages();
+  }
+});
+
 function onSearch(event) {
   event.preventDefault();
   refs.button.disabled = true;
