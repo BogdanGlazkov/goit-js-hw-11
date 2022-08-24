@@ -26,10 +26,11 @@ refs.input.addEventListener('input', () => (refs.button.disabled = false));
 
 window.addEventListener('scroll', () => {
   if (
-    window.scrollY + window.innerHeight >
-    document.documentElement.scrollHeight / 1.1
+    window.scrollY + window.innerHeight >=
+    document.documentElement.scrollHeight * 0.9
   )
     fetchImages();
+  return;
 });
 
 function onSearch(event) {
