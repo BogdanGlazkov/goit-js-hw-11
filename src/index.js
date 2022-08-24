@@ -26,8 +26,8 @@ refs.input.addEventListener('input', () => (refs.button.disabled = false));
 
 window.addEventListener('scroll', () => {
   if (
-    window.scrollY + window.innerHeight >=
-    document.documentElement.scrollHeight
+    window.scrollY + window.innerHeight >
+    document.documentElement.scrollHeight / 1.1
   )
     fetchImages();
 });
